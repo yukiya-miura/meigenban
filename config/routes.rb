@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
     root to: 'toppages#index'
     
     get 'login', to: 'sessions#new'
@@ -7,5 +6,14 @@ Rails.application.routes.draw do
     delete 'logout', to: 'sessions#destroy'
     
     get 'signup', to: 'users#new'
-    resources :users, only: [:index, :show, :create]
+    
+    get 'posts', to: 'posts#new'
+    post 'posts', to: 'posts#create'
+    
+    resources :users, only: [:index, :show, :create, :edit, :update, :destroy]
+    
+    resources :posts, only: [:show, :destroy] do
+        resources :comments, only: [:create, :edit, :update, :destroy]
+    end
+    
 end

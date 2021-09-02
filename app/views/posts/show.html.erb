@@ -1,0 +1,25 @@
+
+
+    <ul>
+【言葉】: <%= @post.content %><br>
+<br>
+【発言者】: <%= @post.author %> 【作品名】: <%= @post.wordby %> 【投稿日】: <%= @post.created_at.strftime("%Y年 %m月 %d日") %> </li>
+    </ul>
+    
+    <!--以下コメント機能実装 -->
+    
+<h3>コメント一覧</h3>
+<% @comments.each do |comment| %>
+  <div>
+    <a href="/users/<%= @post.user.id %>"><%= @post.user.name %></a>　 <%= comment.content %> 　 <%=comment.created_at.strftime("%Y年 %m月 %d日") %>
+    <hr>
+  </div>
+<% end %>
+
+<%= form_for [@post, @comment] do |f| %>
+  <%= f.text_field :content %>
+  <br>
+  <%= f.submit 'コメントする' %>
+<% end %>
+
+<%= link_to "戻る", current_user %>
