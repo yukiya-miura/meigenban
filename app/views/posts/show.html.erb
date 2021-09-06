@@ -3,15 +3,21 @@
     <ul>
 【言葉】: <%= @post.content %><br>
 <br>
-【発言者】: <%= @post.author %> 【作品名】: <%= @post.wordby %> 【投稿日】: <%= @post.created_at.strftime("%Y年 %m月 %d日") %> </li>
+【ジャンル】: <%= @post.genre_id %>【発言者】: <%= @post.author %> 【作品名】: <%= @post.wordby %> 【投稿日】: <%= @post.created_at.strftime("%Y年 %m月 %d日") %> </li>
     </ul>
-    
+    <% if current_user.id == @post.user.id %>
+     <%= link_to '投稿を編集する', edit_post_path, class: 'btn btn-success btn-sm' %>
+    <% end %>
     <!--以下コメント機能実装 -->
     
 <h3>コメント一覧</h3>
 <% @comments.each do |comment| %>
   <div>
-    <a href="/users/<%= @post.user.id %>"><%= @post.user.name %></a>　 <%= comment.content %> 　 <%=comment.created_at.strftime("%Y年 %m月 %d日") %>
+    <a href="/users/<%= @post.user.id %>"><%= @post.user.name %></a>　 <%= comment.content %>  <%=comment.created_at.strftime("%Y年 %m月 %d日") %>
+    <% if current_user.id == comment.user.id %>
+    <%#= link_to 'コメントを編集する', edit_post_comment_path(@post,comment)  %>
+    <%= link_to 'コメントを削除する', post_comment_path(@post, comment), method: :delete, data: { confirm: '削除しますか？' } %>
+    <% end %>
     <hr>
   </div>
 <% end %>

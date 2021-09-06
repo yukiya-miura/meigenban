@@ -1,5 +1,16 @@
 <% if logged_in? %>
-  <p>ログイン完了ユーザ: <%= current_user.name %></p>
+
+  
+    今日の名言：
+      <ul>
+    <% @posts.each do |post| %>
+      <li class="my-3"><%= link_to(post, class: "text-decoration-none") do %>  【言葉】: <%= post.content %><br>
+      【発言者】: <%= post.author %> 【作品名】: <%= post.wordby %> 【投稿日】: <%= post.created_at.strftime("%Y年 %m月 %d日") %> </li>
+    <% end %>
+    <% end %>
+    </ul>
+    
+    
 <% else %>
   <div class="bg-secondary p-3 p-sm-5 my-4 rounded">
     <div class="text-center text-white">
@@ -7,4 +18,14 @@
       <%= link_to 'ユーザ登録', signup_path, class: 'btn btn-lg btn-primary' %>
     </div>
   </div>
+  
+  今日の名言：
+    <ul>
+    <% @posts.each do |post| %>
+      <li class="my-3"><%= link_to(post, class: "text-decoration-none") do %>  【言葉】: <%= post.content %><br>
+      【発言者】: <%= post.author %> 【作品名】: <%= post.wordby %> 【投稿日】: <%= post.created_at.strftime("%Y年 %m月 %d日") %> </li>
+    <% end %>
+    <% end %>
+    </ul>
+
 <% end %>

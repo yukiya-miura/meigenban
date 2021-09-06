@@ -1,9 +1,10 @@
 class PostsController < ApplicationController
   before_action :require_user_logged_in
   before_action :correct_user, only: [:destroy]
+  before_action :set_genre, only: [:index, :new, :edit, :create, :update]
   
   def index
-    @pagy, @posts = pagy(Post.all)
+    @pagy, @posts = pagy(Post.order(created_at: :desc))
   end
   
   def show
@@ -18,6 +19,10 @@ class PostsController < ApplicationController
     @comment = Comment.new
   end
   
+  def edit
+    @post = Post.find(params[:id])
+  end
+  
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
@@ -26,6 +31,18 @@ class PostsController < ApplicationController
     else
       flash.now[:danger] = 'メッセージの投稿に失敗しました。'
       render 'posts/new'
+    end
+  end
+
+  def update
+    @post = Post.find(params[:id])
+
+    if @post.update(post_params)
+      flash[:success] = '投稿を更新しました。'
+      redirect_to @post
+    else
+      flash.now[:danger] = '投稿は更新されませんでした。'
+      render :edit
     end
   end
 
@@ -39,7 +56,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:content, :author, :wordby)
+    params.require(:post).permit(:content, :author, :wordby, :genre_id)
   end
   
   def correct_user
@@ -47,5 +64,9 @@ class PostsController < ApplicationController
     unless @post
     redirect_to root_url
     end
+  end
+  
+  def set_genre
+    @genres = Genre.all
   end
 end
