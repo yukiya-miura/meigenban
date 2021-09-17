@@ -1,3 +1,7 @@
+  <div class="mb-3 text-center">
+    <h3>新規投稿</h3>
+  </div>
+
 <div class="row">
   <div class="col-sm-6 offset-sm-3">
 
@@ -6,7 +10,7 @@
       
       <div class="mb-3">
       <%= f.label :genre, 'ジャンル' %><br>
-      <%= f.collection_select :genre_id, @genres, :name, :name, {include_blank: "---"} %>
+      <%= f.collection_select :genre_id, @genres, :id, :name, {include_blank: "---"} %>
       </div>  
       
       <div class="mb-3">

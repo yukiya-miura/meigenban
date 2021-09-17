@@ -10,9 +10,18 @@ Rails.application.routes.draw do
     #get 'posts', to: 'posts#new'
     post 'posts', to: 'posts#create'
     
-    resources :users, only: [:index, :show, :create, :edit, :update, :destroy]
+    get 'ranking', to: 'favorites#index'
     
-    resources :posts, only: [:index, :show, :new, :edit, :update, :destroy] do 
-        resources :comments, only: [:create, :edit, :update, :destroy]
+    resources :users, only: [:index, :show, :create, :edit, :update, :destroy]do
+        member do
+            get :favorites
+        end
+        end            
+    
+    resources :posts, only: [:index, :show, :new, :edit, :update, :destroy] do
+            resources :comments, only: [:create, :edit, :update, :destroy] 
     end
+    
+    resources :favorites, only: [:create, :destroy]
+    resources :genres, only: [:show]
 end

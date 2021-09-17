@@ -1,31 +1,55 @@
+
+<div>
+このサイトはあらゆる名言を集めたサイトです。
+</div>
+
 <% if logged_in? %>
 
-  
+  <div class="m-3">
     今日の名言：
-      <ul>
-    <% @posts.each do |post| %>
-      <li class="my-3"><%= link_to(post, class: "text-decoration-none") do %>  【言葉】: <%= post.content %><br>
-      【発言者】: <%= post.author %> 【作品名】: <%= post.wordby %> 【投稿日】: <%= post.created_at.strftime("%Y年 %m月 %d日") %> </li>
-    <% end %>
-    <% end %>
-    </ul>
-    
-    
+        <ul>
+            <% @posts.each do |post| %>
+              <li class="my-3">
+                  <div class="d-flex justify-content">
+                  <%= link_to(post, class: "text-decoration-none") do %>  
+                    「<%= post.content %>」<br>
+                    <%= post.author %>の言葉<br>   
+                    【作品名】: <%= post.wordby %><br> 
+                    【ジャンル】: <%= post.genre.name %>
+                  <% end %>
+                  </div>
+                  <div class="d-flex justify-content">
+                    【投稿】: <a href="/users/<%= post.user.id %>"><%= post.user.name %></a>   <%= post.created_at.strftime("%Y年 %m月 %d日") %>
+                     <%= render 'favorites/favorite_button', post: post %><%= post.favorites.count %>
+                     <%= image_tag "chat-left-dots.svg", :size => '30x30', class: "ms-3" %><%= post.comments.count %>
+                  </div>
+              </li>
+            <% end %>
+        </ul>
+  </div>
+
 <% else %>
   <div class="bg-secondary p-3 p-sm-5 my-4 rounded">
     <div class="text-center text-white">
-      <h1>Meigeneratorへようこそ</h1>
-      <%= link_to 'ユーザ登録', signup_path, class: 'btn btn-lg btn-primary' %>
+      <h1>名言板へようこそ</h1>
+      <%= link_to 'ユーザ登録', signup_path, class: 'btn btn-lg btn-primary' %><%= link_to 'ログイン', login_path, class: 'mx-3 btn btn-lg btn-primary' %>
     </div>
   </div>
   
-  今日の名言：
-    <ul>
-    <% @posts.each do |post| %>
-      <li class="my-3"><%= link_to(post, class: "text-decoration-none") do %>  【言葉】: <%= post.content %><br>
-      【発言者】: <%= post.author %> 【作品名】: <%= post.wordby %> 【投稿日】: <%= post.created_at.strftime("%Y年 %m月 %d日") %> </li>
-    <% end %>
-    <% end %>
-    </ul>
+    今日の名言：
+        <ul>
+            <% @posts.each do |post| %>
+            <li class="my-3">
+                <div class="d-flex justify-content">
+                <%= link_to(post, class: "text-decoration-none") do %>  
+                  「<%= post.content %>」<br>
+                  <%= post.author %>の言葉 <br>
+                  【作品名】: <%= post.wordby %><br>
+                  【ジャンル】: <%= post.genre.name %> 【投稿】: <%= post.user.name %> <%= post.created_at.strftime("%Y年 %m月 %d日") %>
+                  <% end %>
+                </div>
+            </li>
+          <% end %>
+        </ul>
 
 <% end %>

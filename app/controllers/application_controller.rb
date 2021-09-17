@@ -4,9 +4,13 @@ class ApplicationController < ActionController::Base
     
      private
 
-     def require_user_logged_in
+    def require_user_logged_in
         unless logged_in?
           redirect_to login_url
         end
-     end
+    end
+    
+    def genre_list
+        @genres = Genre.order(created_at: :desc)
+    end
 end

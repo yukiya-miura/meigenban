@@ -1,0 +1,26 @@
+    <div class="mb-3 text-center">
+      <h3>名言ランキング</h3>
+    </div>
+    
+    <div class="m-3">
+        <% @posts.each.with_index(1) do |post,i| %>
+        <ul>
+            <li class="my-3">
+                第<%= i %>位
+                <div class="d-flex justify-content">
+                    <%= link_to(post, class: "text-decoration-none") do %>  
+                        「<%= post.content %>」<br><br>
+                        <%= post.author %>の言葉<br>   
+                        【作品名】: <%= post.wordby %><br>  
+                        【ジャンル】: <%= post.genre.name %>    
+                      <% end %>
+                </div>
+                <div class="d-flex justify-content">
+                    【投稿】: <a href="/users/<%= post.user.id %>"><%= post.user.name %></a>   <%= post.created_at.strftime("%Y年 %m月 %d日") %>
+                   <%= render 'favorites/favorite_button', post: post %><%= post.favorites.count %>
+                   <%= image_tag "chat-left-dots.svg", :size => '30x30', class: "ms-3" %><%= post.comments.count %>
+                </div>
+            </li>
+        </ul>
+        <% end %>
+    </div>

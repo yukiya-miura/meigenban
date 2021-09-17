@@ -1,0 +1,23 @@
+    <div class="my-3">
+        <h5><ul>
+            <% if logged_in? %>
+             <li class="my-3 p-3"><%= link_to "新規投稿", new_post_path %></li>
+             <% end %>
+             <li class="my-3 p-3"><%= link_to "投稿一覧", :controller => 'posts', :action => 'index' %></li>
+             <li class="my-3 p-3"><%= link_to "お気に入りランキング", ranking_path %></li>
+        </ul></h5>
+    </div>
+    <div class="card m-3">
+        <div class="card-header">
+            <h4>ジャンル別一覧</h4>
+        </div>  
+         <div class="card-body">
+            <% @genres.each do |genre|%>
+                <h5><li class="my-5">
+                    <%= link_to(genre, class: "text-decoration-none") do %>  
+                    「<%= genre.name %>」</h5>
+                    <% end %>
+                </li>
+             <% end %>
+         </div>
+    </div>

@@ -1,31 +1,42 @@
 
 
-    <ul>
-【言葉】: <%= @post.content %><br>
-<br>
-【ジャンル】: <%= @post.genre_id %>【発言者】: <%= @post.author %> 【作品名】: <%= @post.wordby %> 【投稿日】: <%= @post.created_at.strftime("%Y年 %m月 %d日") %> </li>
-    </ul>
-    <% if current_user.id == @post.user.id %>
-     <%= link_to '投稿を編集する', edit_post_path, class: 'btn btn-success btn-sm' %>
-    <% end %>
-    <!--以下コメント機能実装 -->
-    
-<h3>コメント一覧</h3>
-<% @comments.each do |comment| %>
-  <div>
-    <a href="/users/<%= @post.user.id %>"><%= @post.user.name %></a>　 <%= comment.content %>  <%=comment.created_at.strftime("%Y年 %m月 %d日") %>
-    <% if current_user.id == comment.user.id %>
-    <%#= link_to 'コメントを編集する', edit_post_comment_path(@post,comment)  %>
-    <%= link_to 'コメントを削除する', post_comment_path(@post, comment), method: :delete, data: { confirm: '削除しますか？' } %>
-    <% end %>
-    <hr>
-  </div>
-<% end %>
 
-<%= form_for [@post, @comment] do |f| %>
-  <%= f.text_field :content %>
+  「<%= @post.content %>」<br>
   <br>
-  <%= f.submit 'コメントする' %>
-<% end %>
+  <%= @post.author %>の言葉<br>
+  【作品名】: <%= @post.wordby %> <br>
+  【ジャンル】: <%= @post.genre.name %>   【投稿】: <a href="/users/<%= @post.user.id %>"><%= @post.user.name %></a>    <%= @post.created_at.strftime("%Y年 %m月 %d日") %> 
+   
+    <div class="d-flex justify-content mt-3">
+      <% if current_user.id == @post.user.id %>
+         <%= link_to '投稿を編集する', edit_post_path, class: 'btn btn-success btn-sm m-1' %>
+         <%= link_to '投稿を削除する', post_path(@post), method: :delete, data: { confirm: '削除しますか？' }, class: 'btn btn-danger btn-sm m-1' %> 
+       <% else %>
+       <% end %>
+      <%= render 'favorites/favorite_button', post: @post %><%= @post.favorites.count %>
+      <%= image_tag "chat-left-dots.svg", :size => '30x30', class: "ms-3" %><%= @post.comments.count %>
+    </div>
+   <!--以下コメント機能実装 -->
+   
+  <div class="mt-4">   
+  <h4>コメント一覧</h4>
+  <% @comments.each do |comment| %>
+  <div>
+      <a href="/users/<%= comment.user.id %>"><%= comment.user.name %></a>　 <%= comment.content %>  <%=comment.created_at.strftime("%Y年 %m月 %d日") %>
+      <% if current_user.id == comment.user.id %>
+      <%= link_to 'コメントを編集する', edit_post_comment_path(@post, comment) %>
+      <%= link_to 'コメントを削除する', post_comment_path(@post,comment), method: :delete, data: { confirm: '削除しますか？' } %>
+      <% end %>
+      <hr>
+    </div>
+    <% end %>
+  </div> 
+
+  <%= form_for [@post, @comment] do |f| %>
+    <%= f.text_field :content %>
+    <%= hidden_field_tag :post_id, @post.id %>
+    <br>
+    <%= f.submit 'コメントする' %>
+  <% end %>
 
 <%= link_to "戻る", current_user %>

@@ -1,13 +1,15 @@
 class UsersController < ApplicationController
   before_action :require_user_logged_in, only: [:index, :show, :edit]
+  before_action :exist_user?, only: [:show, :edit,:favorites]
+  before_action :genre_list
   
   def index
   end
 
   def show
     @user = User.find(params[:id])
-    @pagy, @posts = pagy(@user.posts.order(id: :desc))
-    @post = Post.find(params[:id])
+    @pagy, @posts = pagy(@user.posts.order(id: :desc), items: 10)
+    #@post = Post.find(params[:id])
   end
 
   def new
@@ -41,24 +43,44 @@ class UsersController < ApplicationController
   
   def imageclear
     @user = User.find(params[:id])
-    @user.update(image: nil)
+    @user.remove_image!
+    @user.save
   end
   
   def create
     @user = User.new(user_params)
-
     if @user.save
-      flash[:success] = 'ユーザを登録しました。'
+      session[:user_id] = @user.id
+      flash[:success] = 'ユーザを登録しました。プロフィール編集画面から、アイコン、自己紹介を入力しましょう。'
       redirect_to @user
     else
       flash.now[:danger] = 'ユーザの登録に失敗しました。'
       render :new
     end
   end
+  
+  def destroy
+    @user = User.find(params[:id]) 
+    @user.destroy
+    flash[:success] = 'ユーザーを削除しました。'
+    redirect_to :root 
+  end
+
+  
+  def favorites
+    @user = User.find_by(id: params[:id])
+    @pagy, @favorites = pagy(@user.like_posts)
+  end
 end
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :introduction, :password, :password_confirmation, :image, :content)
+    params.require(:user).permit(:name, :email, :introduction, :password, :password_confirmation, :image, :content, :remove_image)
+  end
+  
+  def exist_user?
+    unless User.find_by(id: params[:id])
+        redirect_to root_url
+    end
   end

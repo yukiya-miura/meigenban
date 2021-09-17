@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_06_030646) do
+ActiveRecord::Schema.define(version: 2021_09_06_102726) do
 
   create_table "comments", charset: "utf8mb4", force: :cascade do |t|
     t.string "content"
@@ -22,6 +22,16 @@ ActiveRecord::Schema.define(version: 2021_09_06_030646) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "favorites", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "post_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_favorites_on_post_id"
+    t.index ["user_id", "post_id"], name: "index_favorites_on_user_id_and_post_id", unique: true
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
   create_table "genres", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -31,11 +41,12 @@ ActiveRecord::Schema.define(version: 2021_09_06_030646) do
   create_table "posts", charset: "utf8mb4", force: :cascade do |t|
     t.string "content"
     t.bigint "user_id", null: false
-    t.string "genre_id"
+    t.bigint "genre_id", null: false
     t.string "author"
     t.string "wordby"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["genre_id"], name: "index_posts_on_genre_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -51,5 +62,8 @@ ActiveRecord::Schema.define(version: 2021_09_06_030646) do
 
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "favorites", "posts"
+  add_foreign_key "favorites", "users"
+  add_foreign_key "posts", "genres"
   add_foreign_key "posts", "users"
 end

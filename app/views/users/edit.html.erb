@@ -1,59 +1,53 @@
-<div class="text-center">
-  <h3>ユーザ情報編集</h3>
-</div>
-
-
-
-<div class="row">
-  <div class="col-sm-6 offset-sm-3">
-    
-    <%= form_for(@user) do |f| %>
-       <% if @user.image? %>
-          <%= image_tag @user.image.thumb.url %>
-       <% else %>
-          <%= image_tag "default.png", :size => '100x100' %>
-       <% end %>
-       <div>
-          <button type="button" class="mt-2 btn btn-outline-secondary rounded-pill">
-            <%= f.file_field :image, accept: 'image/jpeg,image/gif,image/png' %>
-          </button>
-            <button type="button" class="mt-2 btn btn-outline-secondary rounded-pill">
-             <!--アイコンをデフォルトに戻す機能を実装予定　<%= button_to "ボタン" %> -->
-            </button>  
-          <%= f.submit '更新する', class: 'btn btn-success' %>
-       </div>
-    <% end %>
-    
-    <%= form_with(model: @user) do |f| %>
-      <%= render 'layouts/error_messages', model: f.object %>
-
-
-      <div class="mb-3">
-        <%= f.label :name, '名前' %>
-        <%= f.text_field :name, class: 'form-control' %>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :email, 'Eメールアドレス' %>
-        <%= f.email_field :email, class: 'form-control' %>
-      </div>
-      
-    　<div class="mb-3">
-        <%= f.label :introduction, '自己紹介'  %>
-        <%= f.text_area :introduction, :rows => "4", class: 'form-control' %>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :password, 'パスワード(変更する場合は入力)' %>
-        <%= f.password_field :password, class: 'form-control' %>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :password_confirmation, 'パスワード(再入力)' %>
-        <%= f.password_field :password_confirmation, class: 'form-control' %>
-      </div>
-
-      <%= f.submit '更新', class: 'btn btn-primary w-100' %>
-    <% end %>
+  <div class="mb-3 text-center">
+    <h3>ユーザ情報編集</h3>
   </div>
-</div>
+  
+  
+  
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <%= form_for(@user) do |f| %> 
+        <%= render 'layouts/error_messages', model: f.object %>
+         <% if @user.image? %>
+            <%= image_tag @user.image.thumb.url %>
+         <% else %>
+            <%= image_tag "default.png", :size => '100x100' %>
+         <% end %>
+         <div class="mb-3">
+            <button type="button" class="mt-2 btn btn-outline-secondary">
+              <%= f.file_field :image, accept: 'image/jpeg,image/gif,image/png' %>
+            </button><br>
+            <%= f.check_box :remove_image %>プロフィール画像を削除する
+         </div>
+  
+        <div class="mb-3">
+          <%= f.label :name, '名前' %>
+          <%= f.text_field :name, class: 'form-control' %>
+        </div>
+  
+        <div class="mb-3">
+          <%= f.label :email, 'Eメールアドレス' %>
+          <%= f.email_field :email, class: 'form-control' %>
+        </div>
+        
+      　<div class="mb-3">
+          <%= f.label :introduction, '自己紹介'  %>
+          <%= f.text_area :introduction, :rows => "4", class: 'form-control' %>
+        </div>
+  
+        <div class="mb-3">
+          <%= f.label :password, 'パスワード' %>
+          <%= f.password_field :password, class: 'form-control' %>
+        </div>
+  
+        <div class="mb-3">
+          <%= f.label :password_confirmation, 'パスワード(再入力)' %>
+          <%= f.password_field :password_confirmation, class: 'form-control' %>
+        </div>
+  
+        <%= f.submit '更新', class: 'btn btn-primary w-100' %>
+      <% end %>
+      
+      <%= link_to "アカウントを削除する", user_path(current_user.id), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'mt-5 btn btn-danger w-100' %>
+    </div>
+  </div>

@@ -1,7 +1,7 @@
 <header class="mb-4">
   <nav class="navbar navbar-expand-sm navbar-dark bg-secondary">
     <div class="container-fluid ps-5 pe-5">
-      <a class="navbar-brand" href="/">Meigenerator</a>
+      <a class="navbar-brand" href="/">名言板</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -15,7 +15,7 @@
           <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><%= image_tag "list.svg" %></button>
           <ul class="dropdown-menu dropdown-menu-end">
             <li class="dropdown-item"><%= link_to 'プロフィール', user_path(current_user), class: 'nav-link' %></li>
-            <li class="dropdown-item"><%= link_to '設定', edit_user_path(current_user), class: 'nav-link' %></li>
+            <li class="dropdown-item"><%= link_to 'ユーザ情報編集', edit_user_path(current_user), class: 'nav-link' %></li>
 
             <li class="dropdown-divider"></li>
             <li class="dropdown-item"><%= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link' %></li>
@@ -31,3 +31,4 @@
     </div>
   </nav>
 </header>
+

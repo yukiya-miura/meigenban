@@ -15,21 +15,13 @@
 
     <div class="my-3">
         <% if current_user == @user %>
-            <%=link_to "プロフィール編集", edit_user_path, class: 'btn btn-success btn-sm mb' %>
-            <%=link_to "新規投稿", new_post_path, class: 'btn btn-success btn-sm' %>
+            <%= link_to "プロフィール編集", edit_user_path, class: 'btn btn-success btn-sm mb' %>
+            <%= link_to "新規投稿", new_post_path, class: 'btn btn-success btn-sm' %>
         <% end %>
-         <%=link_to "投稿一覧", :controller => 'posts', :action => 'index' %>
+         <%#= link_to "投稿一覧", :controller => 'posts', :action => 'index' %>
+         <%= link_to "#{@user.name}のお気に入り名言", favorites_user_path, class: 'btn btn-primary btn-sm' %>
+         <%#= link_to "お気に入りランキング", ranking_path, class: 'btn btn-primary btn-sm' %>
+         
+        <%= render 'posts/posts', posts: @posts %>
+     <%#== pagy_nav(@pagy) %>
     </div>    
-    
-    <% if @posts.any? %>
-    <div class="my-3">
-        <ul>
-          <% @posts.each do |post| %>
-            <li class="my-3"><%= link_to(post, class: "text-decoration-none") do %>  【言葉】: <%= post.content %>【発言者】: <%= post.author %> <br>
-                【ジャンル】: <%= post.genre_id %> 【作品名】: <%= post.wordby %> 【投稿日】: <%= post.created_at.strftime("%Y年 %m月 %d日") %> </li>
-          <% end %>
-          <% end %>
-        </ul>
-        <%== pagy_nav(@pagy) %>
-    </div>
-    <% end %>

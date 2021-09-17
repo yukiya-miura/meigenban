@@ -1,18 +1,19 @@
 class PostsController < ApplicationController
   before_action :require_user_logged_in
-  before_action :correct_user, only: [:destroy]
+  before_action :correct_user, only: [:edit, :destroy]
+  before_action :set_posts, only:[:show, :edit, :update, :destroy]
   before_action :set_genre, only: [:index, :new, :edit, :create, :update]
+  before_action :genre_list, except: [:update, :edit]
   
   def index
-    @pagy, @posts = pagy(Post.order(created_at: :desc))
+    @pagy, @posts = pagy(Post.order(created_at: :desc), items: 10)
   end
   
   def show
-    @post = Post.find(params[:id])
     @comments = @post.comments.order(created_at: :desc) 
-    @comment = Comment.new 
-    
+    @comment = Comment.new
   end
+
   
   def new
     @post = Post.new
@@ -20,7 +21,6 @@ class PostsController < ApplicationController
   end
   
   def edit
-    @post = Post.find(params[:id])
   end
   
   def create
@@ -35,8 +35,6 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post = Post.find(params[:id])
-
     if @post.update(post_params)
       flash[:success] = '投稿を更新しました。'
       redirect_to @post
@@ -49,7 +47,7 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     flash[:success] = 'メッセージを削除しました。'
-    redirect_back(fallback_location: root_path)
+    redirect_to current_user
   end
 
 
@@ -63,6 +61,12 @@ class PostsController < ApplicationController
     @post = current_user.posts.find_by(id: params[:id])
     unless @post
     redirect_to root_url
+    end
+  end
+  
+  def set_posts
+    unless @post = Post.find_by(id: params[:id])
+      redirect_to root_url
     end
   end
   
