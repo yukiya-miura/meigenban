@@ -4,6 +4,8 @@ class GenresController < ApplicationController
   
   def show
     @pagy, @posts = pagy(Post.where(genre_id: params[:id]), items: 10) 
-    @genre = Genre.find(params[:id])
+    unless @genre = Genre.find_by(id: params[:id])
+      redirect_to root_url
+    end
   end
 end

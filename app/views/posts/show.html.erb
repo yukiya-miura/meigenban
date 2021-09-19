@@ -18,8 +18,8 @@
     </div>
    <!--以下コメント機能実装 -->
    
-  <div class="mt-4">   
-  <h4>コメント一覧</h4>
+  <div class="mt-4">
+    <h4>コメント一覧</h4>
   <% @comments.each do |comment| %>
   <div>
       <a href="/users/<%= comment.user.id %>"><%= comment.user.name %></a>　 <%= comment.content %>  <%=comment.created_at.strftime("%Y年 %m月 %d日") %>
@@ -36,7 +36,9 @@
     <%= f.text_field :content %>
     <%= hidden_field_tag :post_id, @post.id %>
     <br>
-    <%= f.submit 'コメントする' %>
+    <div class="my-2">
+      <%= f.submit 'コメントする' %>
+    </div>
   <% end %>
 
-<%= link_to "戻る", current_user %>
+<%= link_to "戻る", :back %>

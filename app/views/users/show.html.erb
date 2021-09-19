@@ -1,16 +1,15 @@
-    <div class="my-3">
-        <h2><%= link_to "#{@user.name}", user_path(@user), class: "text-decoration-none" %></h2>
-    </div>
     
-       <% if @user.image? %>
+    <div class="d-flex flex-column.justify-content-center">
+      <% if @user.image? %>
           <%= image_tag @user.image.thumb.url %>
-       <% else %>
+      <% else %>
           <%= image_tag "default.png", :size => '100x100' %>
-       <% end %>
-       
-       <div class="my-3">
-       <%= @user.introduction %>
-       </div>
+      <% end %>
+      <div class="m-4">
+        <h2><%= link_to "#{@user.name}", user_path(@user), class: "text-decoration-none" %></h2>
+        <%= @user.introduction %>
+      </div>
+    </div>
 
 
     <div class="my-3">
@@ -21,7 +20,9 @@
          <%#= link_to "投稿一覧", :controller => 'posts', :action => 'index' %>
          <%= link_to "#{@user.name}のお気に入り名言", favorites_user_path, class: 'btn btn-primary btn-sm' %>
          <%#= link_to "お気に入りランキング", ranking_path, class: 'btn btn-primary btn-sm' %>
-         
+         <div class="my-5 text-center">
+            <h3><%= "#{@user.name}" %>の投稿一覧</h3>
+         </div>
         <%= render 'posts/posts', posts: @posts %>
      <%#== pagy_nav(@pagy) %>
     </div>    

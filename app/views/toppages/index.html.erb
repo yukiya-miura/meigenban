@@ -1,15 +1,15 @@
 
-<div>
+<div class="m-4">
 このサイトはあらゆる名言を集めたサイトです。
 </div>
 
 <% if logged_in? %>
 
-  <div class="m-3">
+  <div class="my-4">
     今日の名言：
         <ul>
             <% @posts.each do |post| %>
-              <li class="my-3">
+              <li class="my-4">
                   <div class="d-flex justify-content">
                   <%= link_to(post, class: "text-decoration-none") do %>  
                     「<%= post.content %>」<br>
@@ -29,10 +29,10 @@
   </div>
 
 <% else %>
-  <div class="bg-secondary p-3 p-sm-5 my-4 rounded">
+  <div class="bg-secondary p-3 p-sm-3 my-4 rounded">
     <div class="text-center text-white">
-      <h1>名言板へようこそ</h1>
-      <%= link_to 'ユーザ登録', signup_path, class: 'btn btn-lg btn-primary' %><%= link_to 'ログイン', login_path, class: 'mx-3 btn btn-lg btn-primary' %>
+      <h2>名言板へようこそ</h2>
+      <%= link_to 'ユーザ登録', signup_path, class: 'btn btn-primary' %><%= link_to 'ログイン', login_path, class: 'mx-3 btn btn-primary' %>
     </div>
   </div>
   
