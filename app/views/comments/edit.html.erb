@@ -4,12 +4,14 @@
   <%= @post.author %>の言葉    【作品名】: <%= @post.wordby %>    【ジャンル】: <%= @post.genre.name %>   【投稿】: <a href="/users/<%= @post.user.id %>"><%= @post.user.name %></a>    <%= @post.created_at.strftime("%Y年 %m月 %d日") %> 
    
 
-      <div class="mb-3">
+      <div class="my-5">
         <%= form_for [@post, @comment] do |f| %>
         <%= render 'layouts/error_messages', model: f.object %>
         <%= f.label :content, 'コメント' %>
         <%= f.text_area :content, class: 'form-control' %>
-      </div>
-
-      <%= f.submit '更新', class: 'btn btn-primary' %>
-       <% end %>
+      
+          <div class="mt-4">
+           <%= f.submit '更新', class: 'btn btn-primary' %>
+          </div>
+        <% end %>
+       </div>

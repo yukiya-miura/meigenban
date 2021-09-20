@@ -9,7 +9,7 @@
       <%= render 'layouts/error_messages', model: f.object %>
       
       <div class="mb-3">
-      <%= f.label :genre, 'ジャンル' %><br>
+      <%= f.label :genre_id, 'ジャンル' %><br>
       <%= f.collection_select :genre_id, @genres, :id, :name, {include_blank: "---"} %>
       </div>  
       

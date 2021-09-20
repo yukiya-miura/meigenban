@@ -14,7 +14,7 @@
        <% else %>
        <% end %>
       <%= render 'favorites/favorite_button', post: @post %><%= @post.favorites.count %>
-      <%= image_tag "chat-left-dots.svg", :size => '30x30', class: "ms-3" %><%= @post.comments.count %>
+      <%= image_tag "chat-left-dots.svg", :size => '30x30', :alt => 'コメント', class: "ms-3" %><%= @post.comments.count %>
     </div>
    <!--以下コメント機能実装 -->
    
@@ -34,7 +34,6 @@
 
   <%= form_for [@post, @comment] do |f| %>
     <%= f.text_field :content %>
-    <%= hidden_field_tag :post_id, @post.id %>
     <br>
     <div class="my-2">
       <%= f.submit 'コメントする' %>

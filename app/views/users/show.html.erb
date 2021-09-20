@@ -1,9 +1,9 @@
     
     <div class="d-flex flex-column.justify-content-center">
       <% if @user.image? %>
-          <%= image_tag @user.image.thumb.url %>
+          <%= image_tag @user.image.thumb.url, :alt => 'profile' %>
       <% else %>
-          <%= image_tag "default.png", :size => '100x100' %>
+          <%= image_tag "default.png", :size => '100x100', :alt => 'profile' %>
       <% end %>
       <div class="m-4">
         <h2><%= link_to "#{@user.name}", user_path(@user), class: "text-decoration-none" %></h2>

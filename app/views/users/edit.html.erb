@@ -9,9 +9,9 @@
       <%= form_for(@user) do |f| %> 
         <%= render 'layouts/error_messages', model: f.object %>
          <% if @user.image? %>
-            <%= image_tag @user.image.thumb.url %>
+            <%= image_tag @user.image.thumb.url, :alt => 'profile' %>
          <% else %>
-            <%= image_tag "default.png", :size => '100x100' %>
+            <%= image_tag "default.png", :size => '100x100', :alt => 'profile' %>
          <% end %>
          <div class="mb-3">
             <button type="button" class="mt-2 btn btn-outline-secondary">

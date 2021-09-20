@@ -12,7 +12,7 @@
           <ul class="navbar-nav">
             <li class="ms-3"><%= link_to current_user.name, user_path(current_user), class: 'nav-link' %></li>
           </ul>
-          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><%= image_tag "list.svg" %></button>
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><%= image_tag "list.svg", :alt => 'ボタン' %></button>
           <ul class="dropdown-menu dropdown-menu-end">
             <li class="dropdown-item"><%= link_to 'マイプロフィール', user_path(current_user), class: 'nav-link' %></li>
             <li class="dropdown-item"><%= link_to "お気に入り名言", favorites_user_path(current_user), class: 'nav-link' %></li>

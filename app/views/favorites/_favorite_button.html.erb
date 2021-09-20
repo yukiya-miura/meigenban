@@ -2,11 +2,11 @@
       <%= form_with(model: current_user.favorites.find_by(post_id: post.id), method: :delete) do |f| %>
       
         <%= hidden_field_tag :post_id, post.id %>
-        <%= image_submit_tag("赤ハート.png") %>
+        <%= image_submit_tag "赤ハート.png", :alt => '赤ハート' %>
       <% end %>
       <% else %>
       <%= form_with(model: current_user.favorites.build) do |f| %>
         <%= hidden_field_tag :post_id, post.id %>
-        <%= image_submit_tag("白ハート.png") %>
+        <%= image_submit_tag"白ハート.png", :alt => '白ハート' %>
       <% end %>
     <% end %>
